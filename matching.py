@@ -1,5 +1,5 @@
 import cv2
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import numpy as np
 class TemplateMatching():
     def __init__(self, template_path, color, th):
@@ -74,33 +74,25 @@ def detect_red(img):
     return mask, masked_img, plot
 
 
-
-cap = cv2.VideoCapture("136.m4v")
-fmt = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
-fps = 30.0
-size = (640, 480)
-writer = cv2.VideoWriter('detect_movie/template.mp4', fmt, fps, size)
-match_top = TemplateMatching('img/burger_top.png', (255, 0, 0), 0.92)
-match_bottom = TemplateMatching('img/burger_bottom.png', (0, 65, 255), 0.96)
-while True:
-    ret, frame = cap.read()
-    if ret:
-        match_top.match(frame)
-        match_bottom.match(frame)
-        _, masked_img, coodinate = detect_red(frame)
-        if coodinate:
-            cv2.rectangle(frame, coodinate[0], coodinate[1],(0,255,0), thickness=2)
-        frame = match_top.draw(frame)
-        frame = match_bottom.draw(frame)
-        writer.write(frame)
-    else:
-        fig = plt.figure()
-        ax1 = fig.add_subplot(1,2,1)
-        ax2 = fig.add_subplot(1,2,2)
-        ax1.plot(match_top.value)
-        ax1.set_xlabel('top')
-        ax2.plot(match_bottom.value)
-        ax2.set_xlabel('bottom')
-        plt.show()
-        writer.release()
+if __name__ == "__main__":
+    cap = cv2.VideoCapture("136.m4v")
+    fmt = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
+    fps = 30.0
+    size = (640, 480)
+    writer = cv2.VideoWriter('detect_movie/template.mp4', fmt, fps, size)
+    match_top = TemplateMatching('img/burger_top.png', (255, 0, 0), 0.92)
+    match_bottom = TemplateMatching('img/burger_bottom.png', (0, 65, 255), 0.96)
+    while True:
+        ret, frame = cap.read()
+        if ret:
+            match_top.match(frame)
+            match_bottom.match(frame)
+            _, masked_img, coodinate = detect_red(frame)
+            if coodinate:
+                cv2.rectangle(frame, coodinate[0], coodinate[1],(0,255,0), thickness=2)
+            frame = match_top.draw(frame)
+            frame = match_bottom.draw(frame)
+            writer.write(frame)
+        else:
+            writer.release()
 

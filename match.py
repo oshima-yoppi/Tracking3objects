@@ -1,5 +1,5 @@
 import cv2
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import numpy as np
 class TemplateMatching():
     def __init__(self, template_path, color, th):
@@ -94,13 +94,5 @@ while True:
         frame = match_bottom.draw(frame)
         writer.write(frame)
     else:
-        fig = plt.figure()
-        ax1 = fig.add_subplot(1,2,1)
-        ax2 = fig.add_subplot(1,2,2)
-        ax1.plot(match_top.value)
-        ax1.set_xlabel('top')
-        ax2.plot(match_bottom.value)
-        ax2.set_xlabel('bottom')
-        plt.show()
         writer.release()
 
